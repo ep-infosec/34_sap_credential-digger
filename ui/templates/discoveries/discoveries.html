@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Repo info top bar -->
+<div class="repo-info grey-color">
+  <a href="/">
+    <span class="icon icon-keyboard_arrow_left"></span>
+    <span class="link-text">Go back to all repos</span>
+  </a>
+  {% if url.startswith('http://') or url.startswith('https://') %}
+  <a href="{{url}}" class="repo-link" target="_blank" title="{{url}}">
+    <span class="icon icon-github"></span>
+    <span class="link-text">{{url}}</span>
+  </a>
+  {% else %}
+  <span class="repo-link" title="{{url}}">
+    <span class="icon icon-folder_open"></span>
+    <span class="link-text">{{url}}</span>
+  </a>
+  {% endif %}
+</div>
+
+<!--discoveries list with search bar-->
+<div class="topicHeaderWrapper">
+  <div class="filename-container">
+    <div class="icon icon-error_outline"></div>
+    <div>
+      <h1 class="topicH1"><span>Discoveries</span></h1>
+    </div>
+  </div>
+  <span class="moreButtons moreButtonsDiscoveries">
+    <a href="/files?url={{url}}" class="btn outline-bg">
+      <span class="icon icon-folder_open"></span>
+      <span>Files view</span>
+    </a>
+    <div class="divider"></div>
+    <button id="deleteRepo" class="btn danger-bg modal-opener" data-modal="deleteRepoModal">
+      <span class="icon icon-delete_outline"></span>
+      <span>Delete Repo</span>
+    </button>
+  </span>
+</div>
+
+<div class="topicHeaderWrapper underTopicHeaderWrapper">
+  <h3 class="scanDescription">
+    <span id="shownDiscoveriesCounter"></span>
+    <span id="totalDiscoveriesCounter"> {{discoveries_count}} total discoveries</span> 
+    <span id="totalDiscoveriesCounterWithBrackets"> ({{discoveries_count}} total discoveries)</span> 
+  </h3>
+</div>
+
+<table id="discoveries-table" class="dataTable" style="width: 100%">
+  <!-- Header -->
+  <thead>
+    <tr>
+      <th></th>
+      <th class="dt-center nowrap">Category</th>
+      <th>Snippet</th>
+      <th class="dt-center nowrap">State</th>
+      <th class="dt-center nowrap">Occurrences</th>
+      <th class="none">Occurrences</th>
+      <th class="dt-center">Actions</th>
+    </tr>
+  </thead>
+  <!-- Content (filled with discoveries info) -->
+  <tbody></tbody>
+</table>
+
+
+{% include 'shared/_deleteRepoModal.html' %}
+
+
+<div id="repo-url" class="hidden">{{url}}</div>
+<div id="file-name" class="hidden">{{file if file else ''}}</div>
+
+<script src="/res/js/discoveries.js"></script>
+{% endblock %}
